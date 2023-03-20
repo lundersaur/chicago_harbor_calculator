@@ -26,4 +26,17 @@
 			<p>Cost: $<span id="cost3">0</span>/month</p>
 		</div>
 	</div>
+
+    <script type="text/javascript">
+      const boatLength = document.getElementById("boat-length");
+      const boatLengthOutput = document.getElementById("boat-length-display");
+      boatLength.addEventListener("change", displayLength);
+
+      function displayLength() {
+          boatLengthOutput.innerText = `${boatLength.value}`
+      }
+
+      // onload =====
+      displayLength();
+    </script>
 </body>
