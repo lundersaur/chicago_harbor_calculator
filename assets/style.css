@@ -6,6 +6,9 @@
 /* columns */
 .responsive-three-column-grid > * {
     padding:1rem;
+    background-color: #8fcbff;
+    margin: 15px 8px;
+    border-radius: 6px;
 }
 
 /* tablet breakpoint */
