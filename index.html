@@ -148,6 +148,12 @@
             font-weight: bold;
         }
         
+        .cost-breakdown {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
         .notes {
             background: #f8f9fa;
             padding: 15px;
@@ -193,6 +199,57 @@
         .hidden {
             display: none;
         }
+        
+        .toggle-section {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background-color: #ccc;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .toggle.active {
+            background-color: #667eea;
+        }
+        
+        .toggle::before {
+            content: '';
+            position: absolute;
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            background-color: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle.active::before {
+            transform: translateX(25px);
+        }
+        
+        .toggle-label {
+            font-weight: 600;
+            color: #2c3e50;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -221,6 +278,16 @@
                 <option value="mooringBuoys">Mooring Buoy</option>
                 <option value="other">Star Dock</option>
             </select>
+        </div>
+        <div class="toggle-section">
+            <div class="toggle-group">
+                <span class="toggle-label">Include tax (7%)</span>
+                <div class="toggle" id="taxToggle"></div>
+            </div>
+            <div class="toggle-group">
+                <span class="toggle-label">Non-resident (25%)</span>
+                <div class="toggle" id="nonResidentToggle"></div>
+            </div>
         </div>
         <div id="resultsCount" style="margin-top: 15px; font-weight: 600; color: #2c3e50;"></div>
     </div>
@@ -373,12 +440,37 @@
         // Initialize the page
         function init() {
             populateFilters();
+            initializeToggles();
             renderHarbors();
             
             // Event listeners
             document.getElementById('harborFilter').addEventListener('change', filterAndCalculate);
             document.getElementById('typeFilter').addEventListener('change', filterAndCalculate);
             document.getElementById('boatLength').addEventListener('input', filterAndCalculate);
+            
+            // Toggle event listeners
+            document.getElementById('taxToggle').addEventListener('click', toggleTax);
+            document.getElementById('nonResidentToggle').addEventListener('click', toggleNonResident);
+        }
+
+        function initializeToggles() {
+            // Initialize toggle states
+            window.includeTax = false;
+            window.nonResident = false;
+        }
+
+        function toggleTax() {
+            window.includeTax = !window.includeTax;
+            const toggle = document.getElementById('taxToggle');
+            toggle.classList.toggle('active', window.includeTax);
+            filterAndCalculate();
+        }
+
+        function toggleNonResident() {
+            window.nonResident = !window.nonResident;
+            const toggle = document.getElementById('nonResidentToggle');
+            toggle.classList.toggle('active', window.nonResident);
+            filterAndCalculate();
         }
 
         function populateFilters() {
@@ -447,10 +539,27 @@
         }
 
         function calculateCostForItem(item, boatLength) {
+            let baseCost;
             if (item.type === 'flat') {
-                return item.rate;
+                baseCost = item.rate;
+            } else {
+                baseCost = item.rate * boatLength;
             }
-            return item.rate * boatLength;
+            
+            // Apply surcharges
+            let finalCost = baseCost;
+            
+            // Apply non-resident surcharge (25%)
+            if (window.nonResident) {
+                finalCost = finalCost * 1.25;
+            }
+            
+            // Apply tax (7%)
+            if (window.includeTax) {
+                finalCost = finalCost * 1.07;
+            }
+            
+            return finalCost;
         }
 
         function renderHarbors() {
