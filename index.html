@@ -3,366 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Content Slider</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Chicago Harbor Rates 2025</title>
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .content-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            min-height: 400px;
-        }
-        
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .slider-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .custom-slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #ddd;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .custom-slider:hover {
-            opacity: 1;
-        }
-        
-        .custom-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .custom-slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .progress-indicator {
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
-            margin-top: 1rem;
-            transition: width 0.3s ease;
-        }
-        
-        .section-title {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+        
+        .contact-info {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group label {
             font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            color: #2c3e50;
         }
         
-        .content-text {
-            color: #555;
-            line-height: 1.6;
-            font-size: 1.1rem;
+        select, input {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
         }
         
-        .value-display {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .harbor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .harbor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .harbor-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .harbor-name {
+            font-size: 22px;
             font-weight: bold;
-            display: inline-block;
-            margin-bottom: 1rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 8px;
         }
         
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.8;
+        .rate-section {
+            margin-bottom: 15px;
         }
         
-        .fee-row {
+        .rate-type {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .rate-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 1rem;
-            margin: 0.5rem 0;
-            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 10px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        
+        .rate-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .rate-item.highlight {
+            background-color: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            font-weight: 600;
+        }
+        
+        .rate-item:last-child {
+            border-bottom: none;
+        }
+        
+        .size {
+            color: #555;
+        }
+        
+        .price {
+            font-weight: 600;
+            color: #27ae60;
+        }
+        
+        .total-cost {
+            background: #e8f5e8;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 14px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .notes {
+            background: #f8f9fa;
+            padding: 15px;
             border-radius: 8px;
+            margin-top: 20px;
             border-left: 4px solid #667eea;
         }
         
-        .fee-label {
-            font-weight: 600;
-            color: #333;
+        .notes h3 {
+            margin-top: 0;
+            color: #2c3e50;
         }
         
-        .fee-value {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 1.1rem;
+        .notes ul {
+            margin: 0;
+            padding-left: 20px;
         }
         
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .toggle-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            background: #ccc;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background 0.3s;
-            user-select: none;
-        }
-        
-        .toggle-switch.active {
-            background: #667eea;
-        }
-        
-        .toggle-slider {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
+        .calculator {
             background: white;
-            border-radius: 50%;
-            transition: transform 0.3s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
-        .toggle-switch.active .toggle-slider {
-            transform: translateX(30px);
+        .calc-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
         
-        .toggle-label {
-            font-weight: 600;
-            color: #333;
+        .calc-result {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #27ae60;
+            margin-top: 15px;
+        }
+        
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container py-5">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-8">
-                <div class="text-center text-white mb-4">
-                    <h1 class="display-4 fw-bold mb-3">Marina Fee Comparison</h1>
-                    <p class="lead">Compare marina packages and fees by adjusting the base rate below</p>
-                </div>
-                
-                <div class="slider-container">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <label for="contentSlider" class="form-label fw-bold">Base Rate ($)</label>
-                            <input type="range" class="custom-slider" id="contentSlider" min="10" max="50" value="30">
-                            <div class="progress-indicator" id="progressBar"></div>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <div class="value-display" id="sliderValue">30</div>
-                            <small class="text-muted">Current Value</small>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="toggle-container">
-                                <span class="toggle-label">Chicago Resident</span>
-                                <div class="toggle-switch" id="chicagoToggle">
-                                    <div class="toggle-slider"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="content-card p-4 h-100">
-                    <div class="text-center mb-4">
-                        <div class="icon" id="leftIcon">⚓</div>
-                        <h3 class="section-title" id="leftTitle">Marina Package A</h3>
-                    </div>
-                    <div class="content-text" id="leftContent">
-                        <p class="mb-4">Premium marina services with comprehensive amenities and facilities.</p>
-                        <div class="fee-row">
-                            <span class="fee-label">Rate:</span>
-                            <span class="fee-value" id="leftRate">$300</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Mooring Fee:</span>
-                            <span class="fee-value" id="leftMooring">$300</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Non-Resident Mooring Fee:</span>
-                            <span class="fee-value" id="leftNonResident">$300</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Tender Fee:</span>
-                            <span class="fee-value" id="leftTender">$300</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Utility Fee:</span>
-                            <span class="fee-value" id="leftUtility">$300</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Mooring Buoy:</span>
-                            <span class="fee-value" id="leftMooringBuoy">$2400</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Stall:</span>
-                            <span class="fee-value" id="leftStall">$3600</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-6">
-                <div class="content-card p-4 h-100">
-                    <div class="text-center mb-4">
-                        <div class="icon" id="rightIcon">🛥️</div>
-                        <h3 class="section-title" id="rightTitle">Marina Package B</h3>
-                    </div>
-                    <div class="content-text" id="rightContent">
-                        <p class="mb-4">Standard marina services with essential amenities and competitive pricing.</p>
-                        <div class="fee-row">
-                            <span class="fee-label">Rate:</span>
-                            <span class="fee-value" id="rightRate">$150</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Mooring Fee:</span>
-                            <span class="fee-value" id="rightMooring">$150</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Non-Resident Mooring Fee:</span>
-                            <span class="fee-value" id="rightNonResident">$150</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Tender Fee:</span>
-                            <span class="fee-value" id="rightTender">$150</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Utility Fee:</span>
-                            <span class="fee-value" id="rightUtility">$150</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Mooring Buoy:</span>
-                            <span class="fee-value" id="rightMooringBuoy">$2400</span>
-                        </div>
-                        <div class="fee-row">
-                            <span class="fee-label">Stall:</span>
-                            <span class="fee-value" id="rightStall">$3600</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="header">
+        <h1>Chicago Harbor Rates 2025</h1>
+        <div class="contact-info">
+            Managed by Westrec Marina Management<br>
+            1521 S. Linn White Drive, 1st Floor South • Chicago, IL 60605<br>
+            (312) 741-3601 • (312) 877-5771 • www.chicagoharbors.com
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Get slider element and other DOM elements
-        const slider = document.getElementById('contentSlider');
-        const sliderValue = document.getElementById('sliderValue');
-        const progressBar = document.getElementById('progressBar');
-        const leftIcon = document.getElementById('leftIcon');
-        const leftTitle = document.getElementById('leftTitle');
-        const rightIcon = document.getElementById('rightIcon');
-        const rightTitle = document.getElementById('rightTitle');
-        
-        // Fee elements
-        const leftRate = document.getElementById('leftRate');
-        const leftMooring = document.getElementById('leftMooring');
-        const leftNonResident = document.getElementById('leftNonResident');
-        const leftTender = document.getElementById('leftTender');
-        const leftUtility = document.getElementById('leftUtility');
-        
-        const rightRate = document.getElementById('rightRate');
-        const rightMooring = document.getElementById('rightMooring');
-        const rightNonResident = document.getElementById('rightNonResident');
-        const rightTender = document.getElementById('rightTender');
-        const rightUtility = document.getElementById('rightUtility');
-        
-        // New fee elements
-        const leftMooringBuoy = document.getElementById('leftMooringBuoy');
-        const leftStall = document.getElementById('leftStall');
-        const rightMooringBuoy = document.getElementById('rightMooringBuoy');
-        const rightStall = document.getElementById('rightStall');
+    <div class="filter-section">
+        <h3 style="margin-top: 0; color: #2c3e50;">Find Your Rate</h3>
+        <div class="filter-group">
+            <label>Boat Length (ft):</label>
+            <input type="number" id="boatLength" placeholder="Enter feet" max="150" min="20">
+            <label>Harbor:</label>
+            <select id="harborFilter">
+                <option value="">All Harbors</option>
+            </select>
+            <label>Type:</label>
+            <select id="typeFilter">
+                <option value="">All Types</option>
+                <option value="stalls">Stall</option>
+                <option value="mooringBuoys">Mooring Buoy</option>
+                <option value="other">Star Dock</option>
+            </select>
+        </div>
+        <div id="resultsCount" style="margin-top: 15px; font-weight: 600; color: #2c3e50;"></div>
+    </div>
 
-        // Function to update content based on slider value
-        function updateContent(value) {
-            // Update slider value display
-            sliderValue.textContent = value;
+    <div id="harborContainer" class="harbor-grid">
+        <!-- Harbor cards will be dynamically generated here -->
+    </div>
+
+    <div class="notes">
+        <h3>Important Notes</h3>
+        <ul>
+            <li>Harbor Fees are based on whichever is greater, the length of the mooring or the length of the boat</li>
+            <li>An additional surcharge up to 15% may be charged on T-Head and side-tie stalls</li>
+            <li>Rates do not include 7% tax or non-resident surcharge</li>
+            <li>Harbor Season is May 1st to October 31st</li>
+            <li>A Non-Resident surcharge of up to 25% will be assessed to boaters residing outside Chicago</li>
+            <li>The Non-Resident surcharge for 31st Street Harbor is waived for 2025 season</li>
+            <li>Utility fees: $100 (≤39'), $175 (40-59'), $250 (≥60')</li>
+            <li>Electric fees: $75 (≤39' Power), $25 (≤39' Sail)</li>
+        </ul>
+    </div>
+
+    <script>
+        // Harbor data structure
+        const harborData = {
+            "31st Street Harbor": {
+                stalls: [
+                    { size: "35'", rate: 109.00 },
+                    { size: "40'", rate: 109.00 },
+                    { size: "45'", rate: 115.00 },
+                    { size: "50'", rate: 115.00 },
+                    { size: "60'", rate: 115.00 },
+                    { size: "70'", rate: 131.00 },
+                    { size: "71'+", rate: 131.00 }
+                ]
+            },
+            "59th Street Harbor": {
+                stalls: [
+                    { size: "25'", rate: 75.00 },
+                    { size: "30'", rate: 75.00 },
+                    { size: "35'", rate: 75.00 }
+                ]
+            },
+            "Belmont Harbor": {
+                stalls: [
+                    { size: "30'", rate: 117.00 },
+                    { size: "35'", rate: 117.00 },
+                    { size: "40'", rate: 123.00 },
+                    { size: "45'", rate: 134.25 },
+                    { size: "50'", rate: 134.25 },
+                    { size: "60'", rate: 135.75 },
+                    { size: "70'", rate: 161.75 },
+                    { size: "80'", rate: 161.75 },
+                    { size: "81'+", rate: 181.00 }
+                ],
+                mooringBuoys: [
+                    { size: "30'", rate: 54.00 },
+                    { size: "35'", rate: 54.00 },
+                    { size: "40'", rate: 60.50 },
+                    { size: "50'", rate: 61.75 }
+                ],
+                other: [
+                    { size: "28' star dock", rate: 1725.00, type: "flat" }
+                ]
+            },
+            "Burnham Harbor": {
+                stalls: [
+                    { size: "30'", rate: 124.00 },
+                    { size: "35'", rate: 124.00 },
+                    { size: "40'", rate: 128.00 },
+                    { size: "45'", rate: 135.00 },
+                    { size: "50'", rate: 139.25 },
+                    { size: "60'", rate: 139.25 },
+                    { size: "70'", rate: 161.75 },
+                    { size: "80'", rate: 161.75 },
+                    { size: "100'", rate: 181.00 },
+                    { size: "101'+", rate: 206.00 }
+                ]
+            },
+            "Diversey Harbor": {
+                stalls: [
+                    { size: "25'", rate: 114.00 },
+                    { size: "30'", rate: 114.00 },
+                    { size: "35'", rate: 114.00 },
+                    { size: "40'", rate: 121.50 },
+                    { size: "45'", rate: 121.50 },
+                    { size: "50'", rate: 121.50 }
+                ]
+            },
+            "DuSable Harbor": {
+                stalls: [
+                    { size: "30'", rate: 137.50 },
+                    { size: "35'", rate: 137.50 },
+                    { size: "40'", rate: 154.25 },
+                    { size: "45'", rate: 154.25 },
+                    { size: "50'", rate: 160.00 },
+                    { size: "60'", rate: 160.00 },
+                    { size: "61'+", rate: 180.75 }
+                ]
+            },
+            "Jackson Inner Harbor": {
+                stalls: [
+                    { size: "30'", rate: 75.00 },
+                    { size: "32'", rate: 75.00 },
+                    { size: "36'", rate: 75.00 },
+                    { size: "40'", rate: 75.00 }
+                ]
+            },
+            "Jackson Outer Harbor": {
+                stalls: [
+                    { size: "30'", rate: 75.00 },
+                    { size: "35'", rate: 75.00 },
+                    { size: "40'", rate: 75.00 }
+                ],
+                mooringBuoys: [
+                    { size: "25'", rate: 39.25 },
+                    { size: "30'", rate: 39.25 },
+                    { size: "35'", rate: 39.25 },
+                    { size: "40'", rate: 39.25 }
+                ]
+            },
+            "Monroe Harbor": {
+                mooringBuoys: [
+                    { size: "25'", rate: 45.00 },
+                    { size: "30'", rate: 45.00 },
+                    { size: "35'", rate: 47.50 },
+                    { size: "40'", rate: 49.75 },
+                    { size: "50'", rate: 52.00 },
+                    { size: "80'", rate: 59.00 }
+                ]
+            },
+            "Montrose Harbor": {
+                stalls: [
+                    { size: "25'", rate: 110.00 },
+                    { size: "30'", rate: 110.00 },
+                    { size: "35'", rate: 114.00 },
+                    { size: "40'", rate: 117.00 },
+                    { size: "50'", rate: 128.00 }
+                ],
+                mooringBuoys: [
+                    { size: "35'", rate: 54.00 },
+                    { size: "40'", rate: 60.50 }
+                ],
+                other: [
+                    { size: "28' star dock", rate: 1725.00, type: "flat" }
+                ]
+            }
+        };
+
+        // Initialize the page
+        function init() {
+            populateFilters();
+            renderHarbors();
             
-            // Update progress bar (scale to 0-100 for visual)
-            const progressPercent = ((value - 10) / (50 - 10)) * 100;
-            progressBar.style.width = progressPercent + '%';
-            
-            // Calculate fees
-            const leftMultiplier = 10;
-            const rightMultiplier = 5;
-            
-            const leftFees = value * leftMultiplier;
-            const rightFees = value * rightMultiplier;
-            
-            // Add fade-in animation
-            const cards = document.querySelectorAll('.content-card');
-            cards.forEach(card => {
-                card.classList.remove('fade-in');
-                setTimeout(() => card.classList.add('fade-in'), 50);
-            });
-            
-            // Update left column fees (10x multiplier)
-            leftRate.textContent = `${leftFees}`;
-            leftMooring.textContent = `${leftFees}`;
-            leftNonResident.textContent = `${leftFees}`;
-            leftTender.textContent = `${leftFees}`;
-            leftUtility.textContent = `${leftFees}`;
-            
-            // Update right column fees (5x multiplier)
-            rightRate.textContent = `${rightFees}`;
-            rightMooring.textContent = `${rightFees}`;
-            rightNonResident.textContent = `${rightFees}`;
-            rightTender.textContent = `${rightFees}`;
-            rightUtility.textContent = `${rightFees}`;
+            // Event listeners
+            document.getElementById('harborFilter').addEventListener('change', filterAndCalculate);
+            document.getElementById('typeFilter').addEventListener('change', filterAndCalculate);
+            document.getElementById('boatLength').addEventListener('input', filterAndCalculate);
         }
 
-        // Add event listener to slider
-        slider.addEventListener('input', function() {
-            updateContent(this.value);
-        });
+        function populateFilters() {
+            const harborFilter = document.getElementById('harborFilter');
+            Object.keys(harborData).forEach(harbor => {
+                const option = document.createElement('option');
+                option.value = harbor;
+                option.textContent = harbor;
+                harborFilter.appendChild(option);
+            });
+        }
 
-        // Initialize content on page load
-        updateContent(slider.value);
+        function filterAndCalculate() {
+            renderHarbors();
+            updateResultsCount();
+        }
+
+        function updateResultsCount() {
+            const boatLength = parseFloat(document.getElementById('boatLength').value);
+            const harborFilter = document.getElementById('harborFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            
+            let totalOptions = 0;
+            let applicableOptions = 0;
+            
+            Object.entries(harborData).forEach(([harborName, data]) => {
+                if (shouldShowHarbor(harborName)) {
+                    Object.entries(data).forEach(([type, items]) => {
+                        if (!typeFilter || type === typeFilter) {
+                            items.forEach(item => {
+                                totalOptions++;
+                                if (boatLength && isApplicableForBoat(item, boatLength)) {
+                                    applicableOptions++;
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            
+            const resultsDiv = document.getElementById('resultsCount');
+            if (boatLength) {
+                resultsDiv.textContent = `Showing ${applicableOptions} applicable option${applicableOptions !== 1 ? 's' : ''} for ${boatLength}' boat`;
+            } else {
+                resultsDiv.textContent = `Showing ${totalOptions} total option${totalOptions !== 1 ? 's' : ''}`;
+            }
+        }
+
+        function isApplicableForBoat(item, boatLength) {
+            const sizeStr = item.size.toString();
+            
+            // Handle star dock (flat rate)
+            if (item.type === 'flat') {
+                const sizeNum = parseInt(sizeStr);
+                return boatLength <= sizeNum;
+            }
+            
+            // Handle regular sizes
+            const sizeNum = parseInt(sizeStr);
+            
+            if (sizeStr.includes('+')) {
+                return boatLength >= sizeNum;
+            } else {
+                return boatLength <= sizeNum;
+            }
+        }
+
+        function calculateCostForItem(item, boatLength) {
+            if (item.type === 'flat') {
+                return item.rate;
+            }
+            return item.rate * boatLength;
+        }
+
+        function renderHarbors() {
+            const container = document.getElementById('harborContainer');
+            container.innerHTML = '';
+
+            Object.entries(harborData).forEach(([harborName, data]) => {
+                if (shouldShowHarbor(harborName)) {
+                    const harborCard = createHarborCard(harborName, data);
+                    container.appendChild(harborCard);
+                }
+            });
+        }
+
+        function shouldShowHarbor(harborName) {
+            const harborFilter = document.getElementById('harborFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            if (harborFilter && harborFilter !== harborName) {
+                return false;
+            }
+
+            if (typeFilter) {
+                const data = harborData[harborName];
+                return data && data[typeFilter];
+            }
+
+            return true;
+        }
+
+        function createHarborCard(harborName, data) {
+            const card = document.createElement('div');
+            card.className = 'harbor-card';
+            const boatLength = parseFloat(document.getElementById('boatLength').value);
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            let content = `<div class="harbor-name">${harborName}</div>`;
+
+            // Show stalls if no type filter or stalls selected
+            if (data.stalls && (!typeFilter || typeFilter === 'stalls')) {
+                content += `
+                    <div class="rate-section">
+                        <div class="rate-type">Stalls</div>
+                        ${data.stalls.map(stall => {
+                            const isApplicable = boatLength && isApplicableForBoat(stall, boatLength);
+                            const totalCost = boatLength ? calculateCostForItem(stall, boatLength) : null;
+                            return `
+                                <div class="rate-item ${isApplicable ? 'highlight' : ''}">
+                                    <span class="size">${stall.size} stall</span>
+                                    <div style="display: flex; align-items: center;">
+                                        <span class="price">${stall.rate.toFixed(2)} per foot</span>
+                                        ${totalCost ? `<span class="total-cost">${totalCost.toLocaleString()}</span>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            // Show mooring buoys if no type filter or mooringBuoys selected
+            if (data.mooringBuoys && (!typeFilter || typeFilter === 'mooringBuoys')) {
+                content += `
+                    <div class="rate-section">
+                        <div class="rate-type">Mooring Buoys</div>
+                        ${data.mooringBuoys.map(buoy => {
+                            const isApplicable = boatLength && isApplicableForBoat(buoy, boatLength);
+                            const totalCost = boatLength ? calculateCostForItem(buoy, boatLength) : null;
+                            return `
+                                <div class="rate-item ${isApplicable ? 'highlight' : ''}">
+                                    <span class="size">${buoy.size} mooring buoy</span>
+                                    <div style="display: flex; align-items: center;">
+                                        <span class="price">${buoy.rate.toFixed(2)} per foot</span>
+                                        ${totalCost ? `<span class="total-cost">${totalCost.toLocaleString()}</span>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            // Show other (star docks) if no type filter or other selected
+            if (data.other && (!typeFilter || typeFilter === 'other')) {
+                content += `
+                    <div class="rate-section">
+                        <div class="rate-type">Star Docks</div>
+                        ${data.other.map(item => {
+                            const isApplicable = boatLength && isApplicableForBoat(item, boatLength);
+                            return `
+                                <div class="rate-item ${isApplicable ? 'highlight' : ''}">
+                                    <span class="size">${item.size}</span>
+                                    <div style="display: flex; align-items: center;">
+                                        <span class="price">${item.rate.toLocaleString()}</span>
+                                        ${isApplicable ? `<span class="total-cost">${item.rate.toLocaleString()}</span>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            card.innerHTML = content;
+            return card;
+        }
+
+        function filterHarbors() {
+            renderHarbors();
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
